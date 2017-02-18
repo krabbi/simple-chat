@@ -4,7 +4,7 @@ import {Chats} from './collections'
 import {SimpleChat} from './config'
 
 
-Meteor.publish("simpleChats", function (roomId, limit) {
+Meteor.publish("simpleChats", function (roomId, allowLocalDelete, userName, limit) {
     check(roomId, String)
     check(limit, Number)
     if (!roomId)
@@ -19,6 +19,9 @@ Meteor.publish("simpleChats", function (roomId, limit) {
     var options = {sort: {date: -1}}
     if (limit)
         options.limit = limit
+    if(allowLocalDelete && userName){
+        query.deletedBy = {$nin: [userName]}
+    }
     return Chats.find(query, options);
 });
 

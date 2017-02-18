@@ -24,6 +24,7 @@ Template.SimpleChatWindow.onCreated(function () {
     this.showViewed = this.data.showViewed != undefined ? this.data.showViewed : SimpleChat.options.showViewed
     this.showJoined = this.data.showJoined != undefined ? this.data.showJoined : SimpleChat.options.showJoined
     this.showReceived = this.data.showReceived != undefined ? this.data.showReceived : SimpleChat.options.showReceived
+    this.allowLocalDelete = this.data.allowLocalDelete != undefined ? this.data.allowLocalDelete : SimpleChat.options.allowLocalDelete
     this.increment = this.limit.get()
     //accept function (for reactive data) or plain data
     if (typeof this.data.roomId != "function")
@@ -55,7 +56,7 @@ Template.SimpleChatWindow.onCreated(function () {
 
 
     this.autorun(() => {
-        this.subscribe("simpleChats", this.getRoomId(), this.limit.get());
+        this.subscribe("simpleChats", this.getRoomId(), this.allowLocalDelete, this.getUsername(), this.limit.get());
         this.subscribing = true;
     })
     Meteor.call("SimpleChat.join", this.getRoomId(), this.getUsername(), this.getAvatar(), this.getName())

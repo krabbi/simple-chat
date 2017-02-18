@@ -17,6 +17,7 @@ export const SimpleChat = {
         showViewed: false,
         showReceived: false,
         showJoined: false,
+        allowLocalDelete: false,
         publishChats: function (roomId, limi) {
             return true
         },
